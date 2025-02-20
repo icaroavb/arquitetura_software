@@ -1,19 +1,36 @@
-
-public class OpenClosedViolation {
+public class OpenClosedPrinciple {
     public static void main(String[] args) {
-        DiscountCalculator calculator = new DiscountCalculator();
-        System.out.println("Discount: " + calculator.calculateDiscount("VIP", 200));
+        DiscountCalculator calculator = new DiscountCalculator(new VIPDiscount());
+        System.out.println("Discount: " + calculator.calculateDiscount(200));
+    }
+}
+
+interface DiscountStrategy {
+    double applyDiscount(double amount);
+}
+
+class RegularDiscount implements DiscountStrategy {
+    @Override
+    public double applyDiscount(double amount) {
+        return amount * 0.1;
+    }
+}
+
+class VIPDiscount implements DiscountStrategy {
+    @Override
+    public double applyDiscount(double amount) {
+        return amount * 0.2;
     }
 }
 
 class DiscountCalculator {
-    public double calculateDiscount(String customerType, double amount) {
-        if (customerType.equals("Regular")) {
-            return amount * 0.1;
-        } else if (customerType.equals("VIP")) {
-            return amount * 0.2;
-        } else {
-            return 0;
-        }
+    private final DiscountStrategy discountStrategy;
+
+    public DiscountCalculator(DiscountStrategy discountStrategy) {
+        this.discountStrategy = discountStrategy;
+    }
+
+    public double calculateDiscount(double amount) {
+        return discountStrategy.applyDiscount(amount);
     }
 }
