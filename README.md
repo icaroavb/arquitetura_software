@@ -220,3 +220,142 @@ Em vez de instaciar uma classe Engine foi apenas atribuido ela na classe car, aj
 
         }
     }
+
+
+|- Princípio da Substituição de Liskov -|
+--------------------------------------------------------------------------------
+O que foi feito:  
+O código original fazia com que `Ostrich` herdasse o método `fly()`, que não pode ser aplicado corretamente a essa classe, violando o princípio da substituição de Liskov. Para corrigir, a classe `Bird` foi dividida em `FlyingBird` e `FlightlessBird`, garantindo que cada pássaro tenha apenas comportamentos adequados à sua natureza.  
+
+
+    public class LiskovSubstitutionPrinciple {
+    public static void main(String[] args) {
+        Bird bird = new Sparrow();
+        bird.fly();
+
+        FlightlessBird ostrich = new Ostrich();
+        ostrich.walk();
+    }
+    }
+
+    abstract class Bird {
+    public abstract void move();
+    }
+        
+    abstract class FlyingBird extends Bird {
+    public abstract void fly();
+
+    @Override
+    public void move() {
+        fly();
+    }
+    }
+
+    abstract class FlightlessBird extends Bird {
+    public abstract void walk();
+
+    @Override
+    public void move() {
+        walk();
+    }
+    }
+
+    class Sparrow extends FlyingBird {
+    @Override
+    public void fly() {
+            System.out.println("Sparrow is flying");
+        }
+    }
+
+    class Ostrich extends FlightlessBird {
+    @Override
+    public void walk() {
+        System.out.println("Ostrich is walking");
+    }
+    }
+
+
+
+
+-| Princípio Aberto-Fechado |-
+--------------------------------------------------------------------------------
+O que foi feito: 
+O código original usava `if` e `else if` para verificar o tipo de cliente e calcular o desconto, tornando difícil a adição de novos tipos sem modificar a classe `DiscountCalculator`. Para corrigir isso, foi criada uma interface `DiscountStrategy`, permitindo que novos tipos de desconto sejam adicionados sem modificar o código existente.  
+
+    public class OpenClosedPrinciple {
+    public static void main(String[] args) {
+        DiscountCalculator calculator = new DiscountCalculator(new VIPDiscount());
+        System.out.println("Discount: " + calculator.calculateDiscount(200));
+        }
+    }
+    
+    interface DiscountStrategy {
+        double applyDiscount(double amount);
+    }
+
+    class RegularDiscount implements DiscountStrategy {
+    @Override
+    public double applyDiscount(double amount) {
+        return amount * 0.1;
+    }
+    }
+
+    class VIPDiscount implements DiscountStrategy {
+    @Override
+    public double applyDiscount(double amount) {
+            return amount * 0.2;
+        }
+    }
+
+    class DiscountCalculator {
+    private final DiscountStrategy discountStrategy;
+
+    public DiscountCalculator(DiscountStrategy discountStrategy) {
+        this.discountStrategy = discountStrategy;
+    }
+
+    public double calculateDiscount(double amount) {
+        return discountStrategy.applyDiscount(amount);
+        }
+    }
+
+
+-| Princípio da Responsabilidade Única |-
+--------------------------------------------------------------------------------
+O que foi feito:  
+A classe `Invoice` no código original fazia múltiplas tarefas: armazenava os dados da fatura, imprimia e salvava no banco de dados. Isso viola o princípio da responsabilidade única. A solução foi dividir essas responsabilidades em três classes: `Invoice` (dados), `InvoicePrinter` (impressão) e `InvoiceRepository` (armazenamento).  
+
+    public class SingleResponsibilityPrinciple {
+    public static void main(String[] args) {
+        Invoice invoice = new Invoice(1000);
+        InvoicePrinter printer = new InvoicePrinter();
+        InvoiceRepository repository = new InvoiceRepository();
+
+        printer.printInvoice(invoice);
+        repository.saveToDatabase(invoice);
+        }
+    }
+
+    class Invoice {
+    private double amount;
+
+    public Invoice(double amount) {
+        this.amount = amount;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+    }
+
+    class InvoicePrinter {
+    public void printInvoice(Invoice invoice) {
+        System.out.println("Invoice amount: " + invoice.getAmount());
+    }
+    }
+
+    class InvoiceRepository {
+    public void saveToDatabase(Invoice invoice) {
+        System.out.println("Saving invoice to database...");
+        }
+    }
