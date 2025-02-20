@@ -1,29 +1,50 @@
+interface MachineFax {
+    void viewFax();
+}
 
-public class InterfaceSegregationViolation {
-    public static void main(String[] args) {
-        MultiFunctionPrinter printer = new MultiFunctionPrinter();
-        printer.print();
-        printer.scan();
-        printer.fax();
+interface MachinePrint{
+    void viewPrint();
+}
+
+interface  MachineScan {
+    void viewScan();
+}
+
+public class Fax implements MachineFax{
+
+    @Override
+    public void viewFax() {
+        System.out.println("Faxing...");
     }
 }
 
-interface Machine {
-    void print();
-    void scan();
-    void fax();
-}
+class Print implements MachinePrint{
 
-class MultiFunctionPrinter implements Machine {
-    public void print() {
+    @Override
+    public void viewPrint() {
         System.out.println("Printing...");
     }
+    
+}
 
-    public void scan() {
+class Scan implements MachineScan{
+
+    @Override
+    public void viewScan() {
         System.out.println("Scanning...");
     }
+    
+}
 
-    public void fax() {
-        System.out.println("Faxing...");
+public class Main {
+    public static void main(String[] args) throws Exception {
+        MachineFax fax = new Fax();
+        MachinePrint print = new Print();
+        MachineScan scan = new Scan();
+
+        fax.viewFax();
+        print.viewPrint();
+        scan.viewScan();
+
     }
 }
