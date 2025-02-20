@@ -22,6 +22,6 @@ class Car {
 
     public void start() {
         engine.start();
-        System.out.println("Car is running");
+
     }
 }
