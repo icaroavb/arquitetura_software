@@ -1,8 +1,11 @@
-//GodClass: Em programação orientada a objetos, é uma classe que sabe demais ou faz demais.
-//É a manifestação prática do SRP - Single Responsability Principle (S)
-//A refatoracao do codigo abrange a criacao de varias classes
-//A refatoracao do codigo tambem se aplica a metodos - cada metodo deve fazer somente uma unica atividade ou funcao
-//1 etapa - divisao das classes
+/**
+ * GodClass: Em programação orientada a objetos, é uma classe que sabe demais ou faz demais.
+ * É a manifestação prática do SRP - Single Responsability Principle (S)
+ *  refatoracao do codigo abrange a criacao de varias classes
+ * A refatoracao do codigo tambem se aplica a metodos - cada metodo deve fazer somente uma unica atividade ou funcao
+ * 1 etapa - divisao das classes
+ */
+
 public class GodClassViolation {
     public static void main(String[] args) {
 
