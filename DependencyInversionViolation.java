@@ -1,6 +1,9 @@
-//dependency inversion principle (DIP) emphazies decoupling and abstraction.
-//the principle consists of two core concepts: high-level modules should not depend on low-level
-//modules, and both should depend on abstractions.
+/**
+ *  Principio da inversao da dependencia enfatiza desacoplamento e abstracao.
+ *  O principio consiste em dois conceitos nucleos: modulos de alto nivel nao devem depender sobre modulos de baixo nivel,
+ *  e ambos devem depender sobre abstracoes.
+ */
+
 public class DependencyInversionViolation {
     public static void main(String[] args) {
         LightBulb bulb = new LightBulb();
